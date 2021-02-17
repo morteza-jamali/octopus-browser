@@ -1,8 +1,13 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, HttpService } from '@nestjs/common';
 
 @Injectable()
 export class AppService {
-  getHello(): string {
-    return 'Hello World!';
+  constructor(private httpService: HttpService) {}
+
+  async getContent() {
+    const result = await this.httpService
+      .get('www.telegram.org')
+      .toPromise();
+    return result.data;
   }
 }
